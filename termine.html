@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        let appointments = {
+            "Fußball": [],
+            "Basketball": [],
+            "American Football": []
+        };
+        
+        function showSection(sectionId) {
+            var sections = document.querySelectorAll('section');
+            sections.forEach(function(section) {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+        
+        function setDateLimits() {
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+        
+            const dateInput = document.getElementById('date');
+            dateInput.setAttribute('min', todayStr);
+        
+            const dayOfWeek = today.getDay(); 
+        
+            if (dayOfWeek === 0) {
+                alert("Sonntage sind keine verfügbaren Tage. Bitte wählen Sie ein anderes Datum.");
+            }
+        
+            dateInput.addEventListener('input', function() {
+                const selectedDate = new Date(dateInput.value);
+                if (selectedDate.getDay() === 0) {  
+                    alert("Sonntage sind keine verfügbaren Tage. Bitte wählen Sie ein anderes Datum.");
+                    dateInput.setCustomValidity('Sonntage sind keine verfügbaren Tage.');
+                } else {
+                    dateInput.setCustomValidity('');
+                }
+            });
+        
+            const availableTimes = [
+                "12:00", "14:00", "16:00", "18:00", "20:00"
+            ];
+        
+            const timeInput = document.getElementById('time');
+            timeInput.setAttribute('list', 'availableTimes');
+            const datalist = document.createElement('datalist');
+            datalist.id = 'availableTimes';
+        
+            availableTimes.forEach(function(time) {
+                const option = document.createElement('option');
+                option.value = time;
+                datalist.appendChild(option);
+            });
+            document.body.appendChild(datalist);
+        }
+        
+        function sendEmail(event) {
+            event.preventDefault(); 
+            const form = document.getElementById('bewerbungsformular');
+            const formData = new FormData(form);
+            const email = 'Grid.iron.sports.original@gmail.com';
+            const subject = 'Neue Bewerbung für ' + formData.get('sport');
+            const body = `Beschreibung: ${formData.get('beschreibung')}`;
+            const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        }
+        
+        function bookAppointment(event) {
+            event.preventDefault();
+            const form = document.getElementById('terminformular');
+            const formData = new FormData(form);
+        
+            const selectedSport = formData.get('sport');
+            const selectedTime = formData.get('time');
+            const selectedDate = formData.get('date');
+            const email = formData.get('email'); 
+        
+            if (appointments[selectedSport].some(function(appointment) {
+                return appointment.email === email; 
+            })) {
+                alert(`Die E-Mail-Adresse ${email} wurde bereits für einen Termin in ${selectedSport} verwendet. Bitte verwenden Sie eine andere E-Mail.`);
+                return;
+            }
+        
+            if (appointments[selectedSport].some(function(appointment) {
+                return appointment.date === selectedDate && appointment.time === selectedTime;
+            })) {
+                alert(`Die Uhrzeit ${selectedTime} am ${selectedDate} ist bereits für ${selectedSport} gebucht. Bitte wählen Sie eine andere Uhrzeit.`);
+                return;
+            }
+        
+            let endTime = "";
+            if (selectedTime === "12:00") endTime = "14:00";
+            if (selectedTime === "14:00") endTime = "16:00";
+            if (selectedTime === "16:00") endTime = "18:00";
+            if (selectedTime === "18:00") endTime = "20:00";
+            if (selectedTime === "20:00") endTime = "22:00";
+        
+            const newAppointment = {
+                name: formData.get('name'),
+                email: email,
+                date: selectedDate,
+                time: selectedTime,
+                endTime: endTime,
+                comments: formData.get('comments'),
+                sport: selectedSport
+            };
+        
+            appointments[selectedSport].push(newAppointment);
+            updateCalendar();
+            alert('Termin erfolgreich gebucht!');
+            form.reset();
+        }
+        
+        function updateCalendar() {
+            const calendarBody = document.querySelector('.calendar-body ul');
+            calendarBody.innerHTML = ''; 
+        
+            if (appointments.length === 0) {
+                calendarBody.innerHTML = '<li>Keine Termine verfügbar.</li>';
+            } else {
+                for (let sport in appointments) {
+                    appointments[sport].forEach(function (appointment) {
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                            <div class="appointment">
+                                <span>${appointment.date} - ${appointment.time} bis ${appointment.endTime}</span>
+                                <span>${appointment.name}</span>
+                                <span>${appointment.sport}</span>
+                            </div>
+                            <div>${appointment.comments}</div>
+                        `;
+                        calendarBody.appendChild(li);
+                    });
+                }
+            }
+        }
+        
+        window.onload = setDateLimits;
+        </script>
+</head>
+<body>
+    <header>
+        <h1>Beratungstermine</h1>
+        <a href="index.html" class="link">Zurück zur Hauptseite</a>
+    </header>
+        <h2>Beratungstermine</h2>
+        <div class="calendar">
+            <div class="calendar-header">
+                <h3>Gebuchte Termine</h3>
+            </div>
+            <div class="calendar-body">
+                <ul>
+                    <!-- Gebuchte Termine werden hier dynamisch hinzugefügt -->
+                </ul>
+            </div>
+        </div>
+        <div class="form-container">
+            <form id="terminformular" onsubmit="bookAppointment(event)">
+                <label for="name">Dein Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Deine E-Mail:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="date">Datum:</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="time">Uhrzeit:</label>
+                <input type="time" id="time" name="time" required>
+
+                <label for="comments">Kommentare (optional):</label>
+                <textarea id="comments" name="comments" rows="4"></textarea>
+
+                <label for="sport">Sportart:</label>
+                <select id="sport" name="sport" required>
+                    <option value="Fußball">Fußball</option>
+                    <option value="Basketball">Basketball</option>
+                    <option value="American Football">American Football</option>
+                </select>
+
+                <button type="submit" class="button1">Termin buchen</button>
+                <br>
+                <br>
+                <br>
+            </form>
+        </div>
+        <footer>
+            <p>&copy; 2024 Grid Iron Sports</p>
+        </footer>
+</body>
+</html>

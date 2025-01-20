@@ -1,144 +1,334 @@
+/* CSS Reset und grundlegende Einstellungen */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Farbvariablen */
+    --background-gradient: linear-gradient(to right, #8a2be2, #0000ff);
+    --primary-color: #8a2be2;
+    --secondary-color: #0000ff;
+    --text-color: #333;
+    --highlight-color: #007BFF;
+    --highlight-hover: #0056b3;
+    --white: #fff;
+
+    /* Box-Schatten */
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --hover-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Global Styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: white;
-    color: rgb(0, 0, 0);
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
+    font-family: 'Poppins', Arial, sans-serif;
+    background: var(--background-gradient);
     color: var(--text-color);
-    background-color: var(--background-color);
-    margin: 0;
-    padding: 0;
+    line-height: 1.6;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
+
+/* Header */
 header {
-    background-color: #333;
-    color: white;
-    padding: 15px;
+    background: var(--background-gradient);
+    color: var(--white);
+    padding: 20px 0;
     text-align: center;
+    box-shadow: var(--box-shadow);
+    font-size: 2.5rem;
 }
+
+/* Navigation */
 nav {
     display: flex;
     justify-content: center;
-    background-color: #808080;
+    background-color: var(--secondary-color);
 }
+
 nav a {
     padding: 14px 20px;
     display: block;
-    color: white;
+    color: var(--white);
     text-decoration: none;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
 nav a:hover {
-    background-color: #333;
+    background-color: var(--text-color);
+    transform: scale(1.05);
 }
-main {
-    padding: 20px;
-}
-section {
-    display: none;
-}
-section.active {
-    display: block;
-}
+
+/* Footer */
 footer {
-    background-color: #333;
-    color: white;
+    background: var(--background-gradient);
+    color: var(--white);
     text-align: center;
-    padding: 10px;
+    padding: 20px;
     position: fixed;
     width: 100%;
     bottom: 0;
+    font-size: 1rem;
 }
-.form-container {
-    max-width: 600px;
+
+/* Hauptinhalt */
+main {
+    flex-grow: 1;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Grid-System für Boxen */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
     margin: 0 auto;
-    background-color: #fff;
+}
+
+.box {
+    background-color: var(--white);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: var(--box-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.box:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--hover-box-shadow);
+}
+
+.box h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.box p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Formular */
+.form-container {
+    max-width: 600px;
+    width: 100%;
+    margin: 20px auto;
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.form-container:hover {
+    transform: scale(1.02);
+}
+
 .form-container label {
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
+    font-size: 1.1rem;
 }
-.form-container input, .form-container select, .form-container textarea, .form-container button {
+
+.form-container input,
+.form-container select,
+.form-container textarea,
+.form-container button {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
 }
+
+.form-container input:focus,
+.form-container select:focus,
+.form-container textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
 .form-container button {
     background-color: #808080;
-    color: white;
+    color: var(--white);
     border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
 .form-container button:hover {
     background-color: #555;
+    transform: scale(1.05);
 }
+
+/* Kalender */
 .calendar-body ul {
     list-style-type: none;
     padding: 0;
 }
+
 .calendar-body li {
     margin-bottom: 10px;
 }
+
 .appointment {
     font-weight: bold;
 }
-.button1 {
-    background-color: #555;
-    text-decoration: none;
-    border: none
-}
-.text {
-    padding-left: 700px;
-}
-.strong{
-    position: relative;
-    font-size: 23px;
-    text-decoration: underline;
-}
+
+/* Links */
 .link {
     text-decoration: none;
     color: rgb(106, 211, 243);
+    transition: color 0.3s ease, transform 0.3s ease;
 }
+
 .link:hover {
-    background-color: #555;
+    color: var(--text-color);
+    transform: scale(1.05);
 }
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-a {
-    transition: color 0.3s ease;
-}
+
+/* Eingabefeld-Container */
 .InputContainer {
-    width: 210px;
+    width: 250px;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(to bottom,rgb(227, 213, 255),rgb(255, 231, 231));
+    background: linear-gradient(to bottom, rgb(227, 213, 255), rgb(255, 231, 231));
     border-radius: 30px;
-    overflow: hidden;
-    cursor: pointer;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.075);
-  }
-  
-  .input {
-    width: 200px;
+    box-shadow: var(--box-shadow);
+    transition: box-shadow 0.3s ease;
+}
+
+.InputContainer:hover {
+    box-shadow: var(--hover-box-shadow);
+}
+
+.input {
+    width: 90%;
     height: 40px;
     border: none;
     outline: none;
     caret-color: rgb(255, 81, 0);
-    background-color: rgb(255, 255, 255);
+    background-color: var(--white);
     border-radius: 30px;
     padding-left: 15px;
     letter-spacing: 0.8px;
     color: rgb(19, 19, 19);
     font-size: 13.4px;
-  }
-  
+}
+
+/* Typografie und Layout */
+h1, h2, h3 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 20px 0;
+}
+
+p {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+ul {
+    margin-top: 20px;
+}
+
+img {
+    margin: 20px auto;
+    width: 275px;
+    display: block;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+}
+
+/* Button Styling */
+.button1 {
+    background-color: #555;
+    border: none;
+    padding: 12px 20px;
+    color: var(--white);
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button1:hover {
+    background-color: #333;
+    transform: scale(1.05);
+}
+
+/* Stärkere Hervorhebungen */
+.strong {
+    font-size: 1.5rem;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* Shadowbox Styles */
+.shadowbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.shadowbox-content {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: var(--hover-box-shadow);
+    text-align: center;
+}
+
+.shadowbox-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.open-shadowbox-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: var(--white);
+    background-color: var(--highlight-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.open-shadowbox-btn:hover {
+    background-color: var(--highlight-hover);
+}
+.shadowbox:hover {
+    gi
+}

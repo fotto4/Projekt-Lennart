@@ -30,14 +30,14 @@
             const dayOfWeek = today.getDay(); 
         
             if (dayOfWeek === 0) {
-                alert("Sonntage sind keine verfügbaren Tage. Bitte wählen Sie ein anderes Datum.");
+                alert("Sundays are not available days. Please select another date.");
             }
         
             dateInput.addEventListener('input', function() {
                 const selectedDate = new Date(dateInput.value);
                 if (selectedDate.getDay() === 0) {  
-                    alert("Sonntage sind keine verfügbaren Tage. Bitte wählen Sie ein anderes Datum.");
-                    dateInput.setCustomValidity('Sonntage sind keine verfügbaren Tage.');
+                    alert("Sundays are not available days. Please select another date..");
+                    dateInput.setCustomValidity('Sundays are not available days.');
                 } else {
                     dateInput.setCustomValidity('');
                 }
@@ -84,14 +84,14 @@
             if (appointments[selectedSport].some(function(appointment) {
                 return appointment.email === email; 
             })) {
-                alert(`Die E-Mail-Adresse ${email} wurde bereits für einen Termin in ${selectedSport} verwendet. Bitte verwenden Sie eine andere E-Mail.`);
+                alert(`The e-mail address ${email} has already been used for an appointment in ${selectedSport}. Please use a different e-mail.`);
                 return;
             }
         
             if (appointments[selectedSport].some(function(appointment) {
                 return appointment.date === selectedDate && appointment.time === selectedTime;
             })) {
-                alert(`Die Uhrzeit ${selectedTime} am ${selectedDate} ist bereits für ${selectedSport} gebucht. Bitte wählen Sie eine andere Uhrzeit.`);
+                alert(`The time ${selectedTime} on ${selectedDate} is already booked for ${selectedSport}. Please select a different time.`);
                 return;
             }
         
@@ -147,13 +147,13 @@
 </head>
 <body>
     <header>
-        <h1>Beratungstermine</h1>
-        <a href="index.html" class="link">Zurück zur Hauptseite</a>
+        <h1>Consultation appointments</h1>
+        <a href="index.html" class="link">back to the Homepage</a>
     </header>
-        <h2>Beratungstermine</h2>
+        <h2>Consultation appointments</h2>
         <div class="calendar">
             <div class="calendar-header">
-                <h3>Gebuchte Termine</h3>
+                <h3>Consultation appointments</h3>
             </div>
             <div class="calendar-body">
                 <ul>
@@ -163,10 +163,10 @@
         </div>
         <div class="form-container">
             <form id="terminformular" onsubmit="bookAppointment(event)">
-                <label for="name">Dein Name:</label>
+                <label for="name">your Name:</label>
                 <input type="text" id="name" name="name" required>
 
-                <label for="email">Deine E-Mail:</label>
+                <label for="email">your E-Mail:</label>
                 <input type="email" id="email" name="email" required>
 
                 <label for="date">Datum:</label>
@@ -178,21 +178,21 @@
                 <label for="comments">Kommentare (optional):</label>
                 <textarea id="comments" name="comments" rows="4"></textarea>
 
-                <label for="sport">Sportart:</label>
+                <label for="sport">Types of sport:</label>
                 <select id="sport" name="sport" required>
-                    <option value="Fußball">Fußball</option>
+                    <option value="Fußball">Soccer</option>
                     <option value="Basketball">Basketball</option>
                     <option value="American Football">American Football</option>
                 </select>
 
-                <button type="submit" class="button1">Termin buchen</button>
+                <button type="submit" class="button1">Book appointment</button>
                 <br>
                 <br>
                 <br>
             </form>
         </div>
         <footer>
-            <p>&copy; 2024 Grid Iron Sports</p>
+            <p>&copy; 2025 Grid Iron Sports</p>
         </footer>
 </body>
 </html>

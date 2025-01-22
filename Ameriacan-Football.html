@@ -23,8 +23,12 @@
             </tr>
         </table>
     </header>
-
-    <h2>The Path</h2>
+    <div class="accordion-item bg-white rounded-lg shadow-md overflow-hidden">
+        <button class="accordion-header w-full text-left px-6 py-4 bg-gray-50 hover:bg-gray-100 transition duration-300 focus:outline-none" aria-expanded="false">
+            <span class="text-xl font-semibold">The Path</span>
+            <span class="accordion-icon float-right transform transition-transform duration-300">&#9660;</span>
+        </button>
+        <div class="accordion-content px-6 py-4">
     <p>The path to becoming an NFL pro requires talent, hard work, and the right mindset. 
         <br>First, you need to master basic football skills such as passing, 
         <br>tackling, and blocking, while improving physical fitness through endurance, strength, and speed. 
@@ -40,9 +44,15 @@
         <figcaption>Figure 1</figcaption> 
     </figure>
     <br>
-
-    <h2>Team Chemistry</h2>
-    <br>
+    </div>
+</div>
+<br>
+<div class="accordion-item bg-white rounded-lg shadow-md overflow-hidden">
+    <button class="accordion-header w-full text-left px-6 py-4 bg-gray-50 hover:bg-gray-100 transition duration-300 focus:outline-none" aria-expanded="false">
+        <span class="text-xl font-semibold">Team Chemistry</span>
+        <span class="accordion-icon float-right transform transition-transform duration-300">&#9660;</span>
+    </button>
+    <div class="accordion-content px-6 py-4">
     <p>At Grid Iron Sports, we help football players unlock their full potential<br>
         <br>and present themselves optimally to scouts and coaches. First, we analyze 
         <br>the strengths and weaknesses of the athlete and develop an individual training program
@@ -57,10 +67,17 @@
         <img src="Football 2.png" alt="">
         <figcaption>Figure 2</figcaption> 
     </figure>
-
+</div>
+</div>
     <br>
-    <ul>
-        <li><strong>What we offer:</strong></li>
+    
+        <div class="accordion-item bg-white rounded-lg shadow-md overflow-hidden">
+            <button class="accordion-header w-full text-left px-6 py-4 bg-gray-50 hover:bg-gray-100 transition duration-300 focus:outline-none" aria-expanded="false">
+                <span class="text-xl font-semibold"> What we offer:</span>
+                <span class="accordion-icon float-right transform transition-transform duration-300">&#9660;</span>
+            </button>
+            <div class="accordion-content px-6 py-4">
+        <ul>
         <li>Help with creating a professional highlight tape.</li>
         <li>Placement assistance for schools and football programs.</li>
         <li>Contacts with scouts and football leagues.</li>
@@ -71,10 +88,16 @@
         <img src="Football Scouts.png" alt="">
         <figcaption>Figure 3</figcaption> 
     </figure>
-
+</div>
+</div>
     <br>
+    <div class="accordion-item bg-white rounded-lg shadow-md overflow-hidden">
+        <button class="accordion-header w-full text-left px-6 py-4 bg-gray-50 hover:bg-gray-100 transition duration-300 focus:outline-none" aria-expanded="false">
+            <span class="text-xl font-semibold"> Your benefits:</span>
+            <span class="accordion-icon float-right transform transition-transform duration-300">&#9660;</span>
+        </button>
+        <div class="accordion-content px-6 py-4">
     <ul>
-        <li><strong>Your benefits:</strong></li>
         <li>Access to the best leagues in the world.</li>
         <li>Career opportunities in the USA or internationally.</li>
         <li>Personal support for long-term goals.</li>
@@ -85,10 +108,16 @@
         <img src="Football 5.png" alt="">
         <figcaption>Figure 4</figcaption> 
     </figure>
-
+</div>
+</div>
     <br>
+    <div class="accordion-item bg-white rounded-lg shadow-md overflow-hidden">
+        <button class="accordion-header w-full text-left px-6 py-4 bg-gray-50 hover:bg-gray-100 transition duration-300 focus:outline-none" aria-expanded="false">
+            <span class="text-xl font-semibold"> How it works:</span>
+            <span class="accordion-icon float-right transform transition-transform duration-300">&#9660;</span>
+        </button>
+        <div class="accordion-content px-6 py-4">
     <ul>
-        <li><strong>How it works:</strong></li>
         <li>You send us your tape.</li>
         <li>We evaluate your performance and provide feedback.</li>
         <li>We find suitable options for you.</li>
@@ -99,6 +128,8 @@
         <img src="Football 6.png" alt="">
         <figcaption>Figure 5</figcaption> 
     </figure>
+</div>
+</div>
     <br>
     <br>
     <br>
@@ -106,5 +137,23 @@
     <footer>
         <p class="pf">&copy; 2025 Grid Iron Sports</p>
     </footer>
+    <script> 
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionContent = button.nextElementSibling;
+                button.classList.toggle('active');
+                
+                if (button.classList.contains('active')) {
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+                    button.setAttribute('aria-expanded', 'true');
+                    button.querySelector('.accordion-icon').style.transform = 'rotate(180deg)';
+                } else {
+                    accordionContent.style.maxHeight = 0;
+                    button.setAttribute('aria-expanded', 'false');
+                    button.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -106,5 +106,23 @@
     <footer>
         <p class="pf">&copy; 2025 Grid Iron Sports</p>
     </footer>
+    <script> 
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionContent = button.nextElementSibling;
+                button.classList.toggle('active');
+                
+                if (button.classList.contains('active')) {
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+                    button.setAttribute('aria-expanded', 'true');
+                    button.querySelector('.accordion-icon').style.transform = 'rotate(180deg)';
+                } else {
+                    accordionContent.style.maxHeight = 0;
+                    button.setAttribute('aria-expanded', 'false');
+                    button.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

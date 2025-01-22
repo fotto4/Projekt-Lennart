@@ -138,6 +138,10 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0;
+    color: white;
+}
+.pf {
+    color: white;
 }
 
 /* Formular */

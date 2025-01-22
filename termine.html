@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <script>
         let appointments = {
-            "Fußball": [],
+            "Football": [],
             "Basketball": [],
             "American Football": []
         };
@@ -30,14 +30,14 @@
             const dayOfWeek = today.getDay(); 
         
             if (dayOfWeek === 0) {
-                alert("Sundays are not available days. Please select another date.");
+                alert("Sundays are not available. Please choose another date.");
             }
         
             dateInput.addEventListener('input', function() {
                 const selectedDate = new Date(dateInput.value);
                 if (selectedDate.getDay() === 0) {  
-                    alert("Sundays are not available days. Please select another date..");
-                    dateInput.setCustomValidity('Sundays are not available days.');
+                    alert("Sundays are not available. Please choose another date.");
+                    dateInput.setCustomValidity('Sundays are not available.');
                 } else {
                     dateInput.setCustomValidity('');
                 }
@@ -65,15 +65,15 @@
             const form = document.getElementById('bewerbungsformular');
             const formData = new FormData(form);
             const email = 'Grid.iron.sports.original@gmail.com';
-            const subject = 'Neue Bewerbung für ' + formData.get('sport');
-            const body = `Beschreibung: ${formData.get('beschreibung')}`;
+            const subject = 'New Application for ' + formData.get('sport');
+            const body = `Description: ${formData.get('description')}`;
             const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             window.location.href = mailtoLink;
         }
         
         function bookAppointment(event) {
             event.preventDefault();
-            const form = document.getElementById('terminformular');
+            const form = document.getElementById('appointmentForm');
             const formData = new FormData(form);
         
             const selectedSport = formData.get('sport');
@@ -84,14 +84,14 @@
             if (appointments[selectedSport].some(function(appointment) {
                 return appointment.email === email; 
             })) {
-                alert(`The e-mail address ${email} has already been used for an appointment in ${selectedSport}. Please use a different e-mail.`);
+                alert(`The email address ${email} has already been used for an appointment in ${selectedSport}. Please use another email.`);
                 return;
             }
         
             if (appointments[selectedSport].some(function(appointment) {
                 return appointment.date === selectedDate && appointment.time === selectedTime;
             })) {
-                alert(`The time ${selectedTime} on ${selectedDate} is already booked for ${selectedSport}. Please select a different time.`);
+                alert(`The time ${selectedTime} on ${selectedDate} is already booked for ${selectedSport}. Please choose another time.`);
                 return;
             }
         
@@ -114,7 +114,7 @@
         
             appointments[selectedSport].push(newAppointment);
             updateCalendar();
-            alert('Termin erfolgreich gebucht!');
+            alert('Appointment successfully booked!');
             form.reset();
         }
         
@@ -123,14 +123,14 @@
             calendarBody.innerHTML = ''; 
         
             if (appointments.length === 0) {
-                calendarBody.innerHTML = '<li>Keine Termine verfügbar.</li>';
+                calendarBody.innerHTML = '<li>No appointments available.</li>';
             } else {
                 for (let sport in appointments) {
                     appointments[sport].forEach(function (appointment) {
                         const li = document.createElement('li');
                         li.innerHTML = `
                             <div class="appointment">
-                                <span>${appointment.date} - ${appointment.time} bis ${appointment.endTime}</span>
+                                <span>${appointment.date} - ${appointment.time} to ${appointment.endTime}</span>
                                 <span>${appointment.name}</span>
                                 <span>${appointment.sport}</span>
                             </div>
@@ -143,56 +143,69 @@
         }
         
         window.onload = setDateLimits;
-        </script>
+    </script>
 </head>
 <body>
     <header>
-        <h1>Consultation appointments</h1>
-        <a href="index.html" class="link">back to the Homepage</a>
+        <table>
+            <tr>
+                <td>
+                    <div class="logo-container">
+                        <img src="Grid Iron.png" alt="Logo" class="logo">
+                    </div>
+                </td>
+                <td>
+                    <h1>Appointments</h1>
+                    <a href="index.html" class="link">Back to the homepage</a>
+                </td>
+            </tr>
+        </table>
     </header>
-        <h2>Consultation appointments</h2>
+    
         <div class="calendar">
-            <div class="calendar-header">
-                <h3>Consultation appointments</h3>
-            </div>
-            <div class="calendar-body">
-                <ul>
-                    <!-- Gebuchte Termine werden hier dynamisch hinzugefügt -->
-                </ul>
-            </div>
+        <div class="calendar-header">
+            <h3>Booked Appointments</h3>
         </div>
-        <div class="form-container">
-            <form id="terminformular" onsubmit="bookAppointment(event)">
-                <label for="name">your Name:</label>
-                <input type="text" id="name" name="name" required>
-
-                <label for="email">your E-Mail:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="date">Datum:</label>
-                <input type="date" id="date" name="date" required>
-
-                <label for="time">Uhrzeit:</label>
-                <input type="time" id="time" name="time" required>
-
-                <label for="comments">Kommentare (optional):</label>
-                <textarea id="comments" name="comments" rows="4"></textarea>
-
-                <label for="sport">Types of sport:</label>
-                <select id="sport" name="sport" required>
-                    <option value="Fußball">Soccer</option>
-                    <option value="Basketball">Basketball</option>
-                    <option value="American Football">American Football</option>
-                </select>
-
-                <button type="submit" class="button1">Book appointment</button>
-                <br>
-                <br>
-                <br>
-            </form>
+        <div class="calendar-body">
+            <ul>
+                <!-- Booked appointments will be dynamically added here -->
+            </ul>
         </div>
-        <footer>
-            <p>&copy; 2025 Grid Iron Sports</p>
-        </footer>
+    </div>
+    
+    <div class="form-container">
+        <form id="appointmentForm" onsubmit="bookAppointment(event)">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" required>
+
+            <label for="comments">Comments (optional):</label>
+            <textarea id="comments" name="comments" rows="4"></textarea>
+
+            <label for="sport">Sport:</label>
+            <select id="sport" name="sport" required>
+                <option value="Football">Football</option>
+                <option value="Basketball">Basketball</option>
+                <option value="American Football">American Football</option>
+            </select>
+
+            <button type="submit" class="button1">Book Appointment</button>
+            <br><br><br>
+        </form>
+    </div>
+    
+    <br><br><br>
+    
+    <footer>
+        <p>&copy; 2025 Grid Iron Sports</p>
+    </footer>
 </body>
 </html>
